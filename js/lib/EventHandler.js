@@ -13,7 +13,8 @@ define(
 
 		EventHandler.prototype.handleAll = function() {
 			this.handleResize(this.game);
-			this.handleCellClick(this.game);
+			// this.handleCellClick(this.game);
+			// this.handleCellMouseOver(this.game);
 			this.handleBuildingClick(this.game);
 			this.handleKeyUp(this.game);
 			this.handleKeyDown(this.game);
@@ -42,7 +43,7 @@ define(
 		};
 
 		EventHandler.prototype.handleMouseWheel = function(game) {
-			game.canvasHolder.getCanvas('game_map').domCanvas.addEventListener(
+			window.addEventListener(
 				'DOMMouseScroll', 
 				function wheel(event){
 					var delta = 0;
@@ -87,7 +88,7 @@ define(
 		};
 
  		EventHandler.prototype.handleKeyDown = function(game) {
-			game.canvasHolder.getCanvas('game_map').domCanvas.addEventListener('mousedown', function(event) {
+			window.addEventListener('mousedown', function(event) {
 				this.mousePosX = game.canvasHolder.getCanvas('game_map').getMousePos(event).x - game.physicEngine.map.paddingX;
 				this.mousePosY = game.canvasHolder.getCanvas('game_map').getMousePos(event).y - game.physicEngine.map.paddingY;
 				this.mouseDown = true;
@@ -95,13 +96,13 @@ define(
 		};		
 
 		EventHandler.prototype.handleKeyUp = function(game) {
-			game.canvasHolder.getCanvas('game_map').domCanvas.addEventListener('mouseup', function(event) {
+			window.addEventListener('mouseup', function(event) {
 				this.mouseDown = false;
 			}, false);
 		};
 
 		EventHandler.prototype.handleMouseMove = function(game) {
-			game.canvasHolder.getCanvas('game_map').domCanvas.addEventListener('mousemove', function(event)
+			window.addEventListener('mousemove', function(event)
 			{
 				if(this.mouseDown)
 				{
@@ -116,7 +117,7 @@ define(
 		};
 
 		EventHandler.prototype.handleCellClick = function(game) {
-			game.canvasHolder.getCanvas('game_map').domCanvas.addEventListener('click', function(event) {
+			window.addEventListener('click', function(event) {
 				var mousePos = game.canvasHolder.getCanvas('game_map').getMousePos(event);
 				var underlyingC = game.physicEngine.map.getUnderlying(mousePos);
 
@@ -137,7 +138,7 @@ define(
 		};
 
 		EventHandler.prototype.handleBuildingClick = function(game) {
-			game.canvasHolder.getCanvas('game_map').domCanvas.addEventListener('click', function(event) {
+			window.addEventListener('click', function(event) {
 				var mousePos = game.canvasHolder.getCanvas('game_map').getMousePos(event);
 				var underlyingB = game.physicEngine.player.buildingHolder.getUnderlying(mousePos);
 
@@ -154,7 +155,7 @@ define(
 		};
 
 		EventHandler.prototype.handleCellMouseOver = function(game) {
-			game.canvasHolder.getCanvas('game_map').domCanvas.addEventListener('mousemove', function(event) {
+			window.addEventListener('mousemove', function(event) {
 				var mousePos = game.canvasHolder.getCanvas('game_map').getMousePos(event);
 				var underlying = game.physicEngine.map.getUnderlying(mousePos);
 

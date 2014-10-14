@@ -5,7 +5,7 @@ define(
 
 		function Map()
 		{
-			this.size = 6;
+			this.size = 4;
 			this.cells = [];
 			this.tileSize = 60;
 			this.paddingX = 100;
@@ -26,16 +26,10 @@ define(
 		Map.prototype.regenerate = function(tileSize, paddingX, paddingY) {
 			for (var i in this.cells) 
 			{
-				// console.log(this.cells[i].tile.rectangle.origin.x);
-				// console.log(this.paddingX);
-
 				this.cells[i].tile.rectangle.origin.x -= this.paddingX;
 				this.cells[i].tile.rectangle.origin.x /= this.tileSize;
 				this.cells[i].tile.rectangle.origin.x *= tileSize;
 				this.cells[i].tile.rectangle.origin.x += paddingX;
-
-				// console.log(paddingX);
-				// console.log(this.cells[i].tile.rectangle.origin.x);
 
 				this.cells[i].tile.rectangle.origin.y -= this.paddingY;
 				this.cells[i].tile.rectangle.origin.y /= this.tileSize;
@@ -48,7 +42,7 @@ define(
 				this.cells[i].tile.rectangle.height /= this.tileSize;
 				this.cells[i].tile.rectangle.height *= tileSize;
 
-
+				this.cells[i].tile.rectangle.process();
 			};
 
 			this.tileSize = tileSize;
@@ -62,141 +56,48 @@ define(
 			var tmp = true;
 			var pasY = 0.58;
 
-			for (var y = 0; y <= this.size * 1/2; y += 1/2)
+			for (var y = 0; y < this.size/2; y += 1/2)
 			{
-				for (var x = 0; x <= y; x ++)
+				for (var x = -y; x <= y; x ++)
 				{
-					if(tmp)
-					{
-						if(y !== 0 && x!== 0)
-						{
-							this.cells.push(
+
+					this.cells.push(
 								new Cell(
 									'img/image_grass_iso.png',
 									new Rectangle(
-										this.paddingX + ((2-x)) * this.tileSize, 
+										this.paddingX + x * this.tileSize, 
 										this.paddingY + y * pasY * this.tileSize, 
 										this.tileSize, 
 										this.tileSize
 									)
 								)
 							);
-						}
-
-						this.cells.push(
-							new Cell(
-								'img/image_grass_iso.png',
-								new Rectangle(
-									this.paddingX + ((x-1) + this.size/2) * this.tileSize, 
-									this.paddingY + y * pasY * this.tileSize, 
-									this.tileSize, 
-									this.tileSize
-								)
-							)
-						);
-					}
-					else
-					{
-						this.cells.push(
-							new Cell(
-								'img/image_grass_iso.png',
-								new Rectangle(
-									this.paddingX + ((-x+3/2)) * this.tileSize, 
-									this.paddingY + y * pasY * this.tileSize, 
-									this.tileSize, 
-									this.tileSize
-								)
-							)
-						);
-
-						this.cells.push(
-							new Cell(
-								'img/image_grass_iso.png',
-								new Rectangle(
-									this.paddingX + ((x-1/2)+ this.size/2) * this.tileSize, 
-									this.paddingY + y * pasY* this.tileSize, 
-									this.tileSize, 
-									this.tileSize
-								)
-							)
-						);
-					}	
 				};
-				tmp = !tmp;
 			};
 
-			tmp = true;
-
-			for (var y = 0 ; y <= this.size * 1/2 ; y += 1/2)
+			for (var y = this.size/2; y <= this.size; y += 1/2)
 			{
-				for (var x = 0; x <= this.size / 2 - y; x ++)
+				for (var x = -this.size+y; x <= -y + this.size; x ++)
 				{
-					if(tmp)
-					{
-						if(x !== 0)
-						{
-							this.cells.push(
+
+					this.cells.push(
 								new Cell(
 									'img/image_grass_iso.png',
 									new Rectangle(
-										this.paddingX + ((2-x)) * this.tileSize, 
-										this.paddingY + (y * pasY  + (this.size* pasY)/2) * this.tileSize, 
+										this.paddingX + x * this.tileSize, 
+										this.paddingY + y * pasY * this.tileSize, 
 										this.tileSize, 
 										this.tileSize
 									)
 								)
 							);
-						}
-
-						this.cells.push(
-							new Cell(
-								'img/image_grass_iso.png',
-								new Rectangle(
-									this.paddingX + ((x-1) + this.size/2) * this.tileSize, 
-									this.paddingY + (y * pasY + (this.size* pasY)/2) * this.tileSize, 
-									this.tileSize, 
-									this.tileSize
-								)
-							)
-						);
-
-
-					}
-					else
-					{
-						this.cells.push(
-							new Cell(
-								'img/image_grass_iso.png',
-								new Rectangle(
-									this.paddingX + ((-x+3/2)) * this.tileSize, 
-									this.paddingY + (y* pasY+(this.size* pasY)/2) * this.tileSize, 
-									this.tileSize, 
-									this.tileSize
-								)
-							)
-						);
-
-						this.cells.push(
-							new Cell(
-								'img/image_grass_iso.png',
-								new Rectangle(
-									this.paddingX + ((x-1/2)+ this.size/2) * this.tileSize, 
-									this.paddingY + (y* pasY+(this.size* pasY)/2) * this.tileSize, 
-									this.tileSize, 
-									this.tileSize
-								)
-							)
-						);
-					}
-					
 				};
-				tmp = !tmp;
 			};
 		};
 
 		Map.prototype.clear = function(canvas)
 		{
-			canvas.context.clearRect(this.paddingX- this.tileSize * this.size/2, this.paddingY -  this.tileSize * this.size/2, this.tileSize * this.size * 2, this.tileSize * this.size * 2 );
+			canvas.context.clearRect(this.paddingX- this.tileSize * this.size, this.paddingY -  this.tileSize * this.size, this.tileSize * this.size * 4, this.tileSize * this.size * 4 );
 		};
 
 		Map.prototype.getUnderlying = function(point)
