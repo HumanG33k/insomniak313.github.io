@@ -9,10 +9,10 @@ define(
 			this.width  = width;
 			this.height = height;
 
-			this.compile();
+			this.process();
 		}
 
-		Rectangle.prototype.compile = function() {
+		Rectangle.prototype.process = function() {
 			this.top    = this.origin.y;
 			this.right  = this.origin.x + this.width;
 			this.bottom = this.origin.y + this.height;

@@ -15,10 +15,10 @@ define(
 		Building.prototype.getTile = function() {
 			return this.tile;
 		};
+
 		Building.prototype.draw = function(context, eventHandler)
 		{
 			this.tile.draw(context, eventHandler);
-
 			context.font = '18pt Calibri';
 			context.fillStyle = 'black';
 			context.clearRect(this.tile.rectangle.origin.x + this.tile.rectangle.width, this.tile.rectangle.origin.y, 200, this.tile.rectangle.height);
