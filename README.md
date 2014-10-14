@@ -1,4 +1,4 @@
-BrainFuck
+Isometric city builder
 =========
 Isometric city builder HTML5 + JS.
 Uses require.js
