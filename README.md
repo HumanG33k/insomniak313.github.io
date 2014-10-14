@@ -8,4 +8,4 @@ At this day :
   - Splitting of game and gui done (2 canvas)
   - Mouse event (mainly map manipulation)
 
-Note that index.php can be easily converted into HTML, I only use inclusion of <?php echo date(); ?> in src of script and stylesheets in order to bypass my browsers caches.
+The game can be seen online at http://insomniak313.github.io/
