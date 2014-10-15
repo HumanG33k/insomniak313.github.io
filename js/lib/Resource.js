@@ -3,17 +3,17 @@ define(
 	function(Tile) {
 		"use strict";
 
-		function Resource(name, value, currency, src, rectangle)
+		function Resource(name, value, currency, texture, rectangle)
 		{
 			this.name     = name;
 			this.value    = value;
 			this.currency = currency;
-			this.tile     = new Tile(src, rectangle, false);
+			this.tile     = new Tile(texture, rectangle);
 		}
 
-		Resource.prototype.draw = function(context, eventHandler)
+		Resource.prototype.draw = function(context)
 		{
-			this.tile.draw(context, eventHandler);
+			this.tile.draw(context);
 			
 			context.font = '18pt Calibri';
 			context.fillStyle = 'black';

@@ -12,7 +12,7 @@ define(
 
 		PhysicEngine.prototype.build = function()
 		{
-			this.map.generate();
+			this.map.generate(this.game.graphicEngine.textureHolder.getTexture('grass'));
 		};
 
 		return PhysicEngine;

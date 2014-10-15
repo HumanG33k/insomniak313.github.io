@@ -8,14 +8,14 @@ define(
 			this.resources = [];
 		}
 
-		ResourceHolder.prototype.addResource = function(game, name, value, currency, src)
+		ResourceHolder.prototype.addResource = function(game, name, value, currency, texture)
 		{
 			this.resources.push(
 				new Resource(
 					name, 
 					value, 
 					currency, 
-					src, 
+					texture, 
 					new Rectangle(
 						game.canvasHolder.getCanvas('map_layer').width/4 * (this.resources.length + 1),
 						10, 
@@ -26,10 +26,10 @@ define(
 				);
 		};
 
-		ResourceHolder.prototype.draw = function(context, eventHandler)
+		ResourceHolder.prototype.draw = function(context)
 		{
 			for (var r in this.resources) {
-				this.resources[r].draw(context, eventHandler);
+				this.resources[r].draw(context);
 			};
 		};
 

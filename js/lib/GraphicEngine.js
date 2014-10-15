@@ -1,11 +1,13 @@
 define(
-	[],
-	function() {
+	['TextureHolder'],
+	function(TextureHolder) {
 		"use strict";
 
 		function GraphicEngine(game)
 		{
 			this.game   = game;
+			this.textureHolder = new TextureHolder();
+			this.textureHolder.init();
 		}
 
 		GraphicEngine.prototype.draw = function() {
@@ -26,22 +28,22 @@ define(
 
 		GraphicEngine.prototype.drawMapPreprocessing = function()
 		{
-			this.game.physicEngine.map.draw(this.game.canvasHolder.getCanvas('preprocessing_layer').context, this.eventHandler);
+			this.game.physicEngine.map.draw(this.game.canvasHolder.getCanvas('preprocessing_layer').context);
 		};
 
 		GraphicEngine.prototype.drawPlayer = function()
 		{
-			this.game.physicEngine.player.draw(this.game.canvasHolder.getCanvas('ressource_layer').context, this.eventHandler);
+			this.game.physicEngine.player.draw(this.game.canvasHolder.getCanvas('ressource_layer').context);
 		};
 
 		GraphicEngine.prototype.drawBuildingHolder = function()
 		{
-			this.game.physicEngine.player.drawBuildingHolder(this.game.canvasHolder.getCanvas('building_layer').context, this.eventHandler);
+			this.game.gameEngine.drawBuildingHolder(this.game.canvasHolder.getCanvas('building_layer').context);
 		};
 
 		GraphicEngine.prototype.drawResourceHolder = function()
 		{
-			this.game.gameEngine.draw(this.game.canvasHolder.getCanvas('ressource_layer').context, this.eventHandler);
+			this.game.gameEngine.drawResourceHolder(this.game.canvasHolder.getCanvas('ressource_layer').context);
 		};
 
 		return GraphicEngine;

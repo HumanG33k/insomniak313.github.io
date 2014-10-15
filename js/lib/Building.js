@@ -3,12 +3,12 @@ define(
 	function(Tile) {
 		"use strict";
 
-		function Building(name, cost, currency, src, rectangle)
+		function Building(name, cost, currency, texture, rectangle)
 		{
 			this.name     = name;
 			this.cost     = cost;
 			this.currency = currency;
-			this.tile     = new Tile(src, rectangle, false);
+			this.tile     = new Tile(texture, rectangle);
 			this.active   = false;
 		}
 
@@ -16,9 +16,9 @@ define(
 			return this.tile;
 		};
 
-		Building.prototype.draw = function(context, eventHandler)
+		Building.prototype.draw = function(context)
 		{
-			this.tile.draw(context, eventHandler);
+			this.tile.draw(context);
 			context.font = '18pt Calibri';
 			context.fillStyle = 'black';
 			context.clearRect(this.tile.rectangle.origin.x + this.tile.rectangle.width, this.tile.rectangle.origin.y, 200, this.tile.rectangle.height);

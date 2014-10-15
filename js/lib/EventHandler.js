@@ -25,23 +25,13 @@ define(
 		EventHandler.prototype.handleResize = function(game) {
 			window.addEventListener('resize', respondCanvas, false);
 			function respondCanvas(){ 
-				game.canvasHolder.getCanvas('map_layer').domCanvas.setAttribute('width', game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetWidth );
-				game.canvasHolder.getCanvas('map_layer').domCanvas.setAttribute('height', game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetHeight );
-				game.canvasHolder.getCanvas('map_layer').width = game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetWidth;
-				game.canvasHolder.getCanvas('map_layer').height = game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetHeight;
+				game.canvasHolder.getCanvas('map_layer').stretchToParent();
 
 				game.physicEngine.map.figureTileSize(game.canvasHolder.getCanvas('map_layer'));
 				game.physicEngine.map.regenerate(game.physicEngine.map.tileSize, game.physicEngine.map.paddingX, game.physicEngine.map.paddingY);
 				
-				game.canvasHolder.getCanvas('ressource_layer').domCanvas.setAttribute('width', game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetWidth );
-				game.canvasHolder.getCanvas('ressource_layer').domCanvas.setAttribute('height', game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetHeight );
-				game.canvasHolder.getCanvas('ressource_layer').width = game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetWidth;
-				game.canvasHolder.getCanvas('ressource_layer').height = game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetHeight;
-
-				game.canvasHolder.getCanvas('building_layer').domCanvas.setAttribute('width', game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetWidth );
-				game.canvasHolder.getCanvas('building_layer').domCanvas.setAttribute('height', game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetHeight );
-				game.canvasHolder.getCanvas('building_layer').width = game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetWidth;
-				game.canvasHolder.getCanvas('building_layer').height = game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetHeight;
+				game.canvasHolder.getCanvas('ressource_layer').stretchToParent();
+				game.canvasHolder.getCanvas('building_layer').stretchToParent();
 
 				game.canvasHolder.getCanvas('preprocessing_layer').domCanvas.setAttribute('width', game.physicEngine.map.tileSize * game.physicEngine.map.size);
 				game.canvasHolder.getCanvas('preprocessing_layer').domCanvas.setAttribute('height', game.physicEngine.map.tileSize * game.physicEngine.map.size);
@@ -126,7 +116,7 @@ define(
 			{
 				if(this.mouseDown)
 				{
-					game.physicEngine.player.buildingHolder.desactivateBuildings();
+					game.gameEngine.buildingHolder.desactivateBuildings();
 					game.physicEngine.map.clear(game.canvasHolder.getCanvas('map_layer'));
 					game.physicEngine.map.regenerate(game.physicEngine.map.tileSize, game.canvasHolder.getCanvas('map_layer').getMousePos(event).x - this.mousePosX, game.canvasHolder.getCanvas('map_layer').getMousePos(event).y - this.mousePosY);
 					game.refresh();
@@ -159,7 +149,7 @@ define(
 		EventHandler.prototype.handleBuildingClick = function(game) {
 			window.addEventListener('click', function(event) {
 				var mousePos = game.canvasHolder.getCanvas('map_layer').getMousePos(event);
-				var underlyingB = game.physicEngine.player.buildingHolder.getUnderlying(mousePos);
+				var underlyingB = game.gameEngine.buildingHolder.getUnderlying(mousePos);
 
 				if(typeof underlyingB.underlyingBuilding !== "undefined")
 				{

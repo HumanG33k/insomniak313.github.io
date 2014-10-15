@@ -20,6 +20,13 @@ define(
 			};
 		};
 
+		Canvas.prototype.stretchToParent = function() {
+			this.domCanvas.setAttribute('width', this.domCanvas.parentNode.offsetWidth );
+			this.domCanvas.setAttribute('height', this.domCanvas.parentNode.offsetHeight );
+			this.width = this.domCanvas.parentNode.offsetWidth;
+			this.height = this.domCanvas.parentNode.offsetHeight;
+		};
+
 
 		return Canvas;
 	}

@@ -3,9 +3,9 @@ define(
 	function(Tile, Building, Rectangle) {
 		"use strict";
 
-		function Cell(src, rectangle)
+		function Cell(texture, rectangle)
 		{
-			this.tile      = new Tile(src, rectangle, true);
+			this.tile      = new Tile(texture, rectangle);
 			this.hover     = false;
 			this.active    = false;
 			this.building  = null;
@@ -15,7 +15,7 @@ define(
 			this.building = building;
 		};
 
-		Cell.prototype.draw = function(context, eventHandler)
+		Cell.prototype.draw = function(context)
 		{
 			// if(this.active)
 			// {
@@ -29,14 +29,14 @@ define(
 			// {
 			// 	this.tile.image.src = 'img/image_grass_iso.png';
 			// }
-			this.tile.draw(context, eventHandler);
+			this.tile.draw(context);
 		};
 
-		Cell.prototype.drawBuilding = function(context, eventHandler)
+		Cell.prototype.drawBuilding = function(context)
 		{
 			if(this.building !== null)
 			{
-				this.building.getTile().draw(context, eventHandler);
+				this.building.getTile().draw(context);
 			}
 		};
 

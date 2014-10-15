@@ -8,22 +8,14 @@ define(
 			this.login    = login;
 			this.password = password;
 			this.mail     = mail;
-
-			this.buildingHolder = new BuildingHolder();
-			this.buildingHolder.build();
 		}
 
-		Player.prototype.draw = function(context, eventHandler)
+		Player.prototype.draw = function(context)
 		{
-			this.drawUser(context, eventHandler);
+			this.drawUser(context);
 		};
 
-		Player.prototype.drawBuildingHolder = function(context, eventHandler)
-		{
-			this.buildingHolder.draw(context, eventHandler);
-		};
-
-		Player.prototype.drawUser = function(context, eventHandler)
+		Player.prototype.drawUser = function(context)
 		{
 			context.clearRect(0, 0,  100, 40);
 			context.font = '18pt Calibri';

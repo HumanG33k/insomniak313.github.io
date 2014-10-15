@@ -5,9 +5,9 @@ define(
 
 		function Map()
 		{
-			this.size = 4;
+			this.size = 100;
 			this.cells = [];
-			this.tileSize = 60;
+			this.tileSize = 20;
 			this.paddingX = 100;
 			this.paddingY = 100;
 		}
@@ -15,11 +15,11 @@ define(
 		Map.prototype.figureTileSize = function(canvas) {
 			if(canvas.width >= canvas.height)
 			{
-				this.tileSize = ((canvas.width - 2 * this.paddingX) / this.size)/2;
+				this.tileSize = ((canvas.width - 2 * this.paddingX) / this.size);
 			}
 			else
 			{
-				this.tileSize = ((canvas.height - 2 * this.paddingX) / this.size)/2;
+				this.tileSize = ((canvas.height - 2 * this.paddingX) / this.size);
 			}
 		};
 
@@ -43,7 +43,7 @@ define(
 				this.cells[i].tile.rectangle.height *= tileSize;
 
 				this.cells[i].tile.rectangle.process();
-				this.cells[i].tile.process(this.cells[i].tile.rectangle.width, this.cells[i].tile.rectangle.height);
+				// this.cells[i].tile.process(this.cells[i].tile.rectangle.width, this.cells[i].tile.rectangle.height);
 			};
 
 			this.tileSize = tileSize;
@@ -51,7 +51,7 @@ define(
 			this.paddingY = paddingY;
 		};
 		
-		Map.prototype.generate = function()
+		Map.prototype.generate = function(texture)
 		{
 			this.cells = [];
 			var tmp = true;
@@ -64,7 +64,7 @@ define(
 
 					this.cells.push(
 								new Cell(
-									'img/grass.svg',
+									texture,
 									new Rectangle(
 										(this.size/2 + x) * this.tileSize, 
 										(this.size/2 + y) * pasY * this.tileSize, 
@@ -83,7 +83,7 @@ define(
 
 					this.cells.push(
 								new Cell(
-									'img/grass.svg',
+									texture,
 									new Rectangle(
 										(this.size/2 + x) * this.tileSize, 
 										(this.size/2 + y) * pasY * this.tileSize, 
@@ -120,12 +120,12 @@ define(
 			return underlying;
 		};
 
-		Map.prototype.draw = function(context, eventHandler)
+		Map.prototype.draw = function(context)
 		{
 			for (var i in this.cells) 
 			{
-				this.cells[i].draw(context, eventHandler);
-				this.cells[i].drawBuilding(context, eventHandler);
+				this.cells[i].draw(context);
+				this.cells[i].drawBuilding(context);
 			};
 		};
 
