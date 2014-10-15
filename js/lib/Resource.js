@@ -8,7 +8,7 @@ define(
 			this.name     = name;
 			this.value    = value;
 			this.currency = currency;
-			this.tile     = new Tile(src, rectangle);
+			this.tile     = new Tile(src, rectangle, false);
 		}
 
 		Resource.prototype.draw = function(context, eventHandler)

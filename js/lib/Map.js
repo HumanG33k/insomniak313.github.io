@@ -15,26 +15,26 @@ define(
 		Map.prototype.figureTileSize = function(canvas) {
 			if(canvas.width >= canvas.height)
 			{
-				this.tileSize = (canvas.width - 2 * this.paddingX) / this.size;
+				this.tileSize = ((canvas.width - 2 * this.paddingX) / this.size)/2;
 			}
 			else
 			{
-				this.tileSize = (canvas.height - 2 * this.paddingX) / this.size;
+				this.tileSize = ((canvas.height - 2 * this.paddingX) / this.size)/2;
 			}
 		};
 
 		Map.prototype.regenerate = function(tileSize, paddingX, paddingY) {
 			for (var i in this.cells) 
 			{
-				this.cells[i].tile.rectangle.origin.x -= this.paddingX;
+				// this.cells[i].tile.rectangle.origin.x -= this.paddingX;
 				this.cells[i].tile.rectangle.origin.x /= this.tileSize;
 				this.cells[i].tile.rectangle.origin.x *= tileSize;
-				this.cells[i].tile.rectangle.origin.x += paddingX;
+				// this.cells[i].tile.rectangle.origin.x += paddingX;
 
-				this.cells[i].tile.rectangle.origin.y -= this.paddingY;
+				// this.cells[i].tile.rectangle.origin.y -= this.paddingY;
 				this.cells[i].tile.rectangle.origin.y /= this.tileSize;
 				this.cells[i].tile.rectangle.origin.y *= tileSize;
-				this.cells[i].tile.rectangle.origin.y += paddingY;
+				// this.cells[i].tile.rectangle.origin.y += paddingY;
 
 				this.cells[i].tile.rectangle.width /= this.tileSize;
 				this.cells[i].tile.rectangle.width *= tileSize;
@@ -43,6 +43,7 @@ define(
 				this.cells[i].tile.rectangle.height *= tileSize;
 
 				this.cells[i].tile.rectangle.process();
+				this.cells[i].tile.process(this.cells[i].tile.rectangle.width, this.cells[i].tile.rectangle.height);
 			};
 
 			this.tileSize = tileSize;
@@ -63,10 +64,10 @@ define(
 
 					this.cells.push(
 								new Cell(
-									'img/image_grass_iso.png',
+									'img/grass.svg',
 									new Rectangle(
-										this.paddingX + x * this.tileSize, 
-										this.paddingY + y * pasY * this.tileSize, 
+										(this.size/2 + x) * this.tileSize, 
+										(this.size/2 + y) * pasY * this.tileSize, 
 										this.tileSize, 
 										this.tileSize
 									)
@@ -82,10 +83,10 @@ define(
 
 					this.cells.push(
 								new Cell(
-									'img/image_grass_iso.png',
+									'img/grass.svg',
 									new Rectangle(
-										this.paddingX + x * this.tileSize, 
-										this.paddingY + y * pasY * this.tileSize, 
+										(this.size/2 + x) * this.tileSize, 
+										(this.size/2 + y) * pasY * this.tileSize, 
 										this.tileSize, 
 										this.tileSize
 									)
@@ -102,6 +103,8 @@ define(
 
 		Map.prototype.getUnderlying = function(point)
 		{
+			point.x = point.x - this.paddingX;
+			point.y = point.y - this.paddingY;
 			var underlying = {"notUnderlyingCell": []};
 			for (var i in this.cells) 
 			{

@@ -5,7 +5,7 @@ define(
 
 		function Cell(src, rectangle)
 		{
-			this.tile      = new Tile(src, rectangle);
+			this.tile      = new Tile(src, rectangle, true);
 			this.hover     = false;
 			this.active    = false;
 			this.building  = null;

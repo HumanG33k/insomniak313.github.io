@@ -17,14 +17,21 @@ div#main
 canvas
 {
 	position: absolute;
+	/*border:1px solid black;*/
 }
 
-canvas#game_map
+canvas#map_layer
 {
 	z-index: 0;
 }
 
-canvas#game_gui
+canvas#ressource_layer
 {
 	z-index: 1;
+}
+
+canvas#preprocessing_layer
+{
+	display:none;
+	/*border:1px solid black;*/
 }

@@ -13,7 +13,7 @@ define(
 
 		EventHandler.prototype.handleAll = function() {
 			this.handleResize(this.game);
-			// this.handleCellClick(this.game);
+			this.handleCellClick(this.game);
 			// this.handleCellMouseOver(this.game);
 			this.handleBuildingClick(this.game);
 			this.handleKeyUp(this.game);
@@ -25,21 +25,33 @@ define(
 		EventHandler.prototype.handleResize = function(game) {
 			window.addEventListener('resize', respondCanvas, false);
 			function respondCanvas(){ 
-				game.canvasHolder.getCanvas('game_map').domCanvas.setAttribute('width', game.canvasHolder.getCanvas('game_map').domCanvas.parentNode.offsetWidth );
-				game.canvasHolder.getCanvas('game_map').domCanvas.setAttribute('height', game.canvasHolder.getCanvas('game_map').domCanvas.parentNode.offsetHeight );
-				game.canvasHolder.getCanvas('game_map').width = game.canvasHolder.getCanvas('game_map').domCanvas.parentNode.offsetWidth;
-				game.canvasHolder.getCanvas('game_map').height = game.canvasHolder.getCanvas('game_map').domCanvas.parentNode.offsetHeight;
+				game.canvasHolder.getCanvas('map_layer').domCanvas.setAttribute('width', game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetWidth );
+				game.canvasHolder.getCanvas('map_layer').domCanvas.setAttribute('height', game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetHeight );
+				game.canvasHolder.getCanvas('map_layer').width = game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetWidth;
+				game.canvasHolder.getCanvas('map_layer').height = game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetHeight;
 
-				game.canvasHolder.getCanvas('game_gui').domCanvas.setAttribute('width', game.canvasHolder.getCanvas('game_map').domCanvas.parentNode.offsetWidth );
-				game.canvasHolder.getCanvas('game_gui').domCanvas.setAttribute('height', game.canvasHolder.getCanvas('game_map').domCanvas.parentNode.offsetHeight );
-				game.canvasHolder.getCanvas('game_gui').width = game.canvasHolder.getCanvas('game_map').domCanvas.parentNode.offsetWidth;
-				game.canvasHolder.getCanvas('game_gui').height = game.canvasHolder.getCanvas('game_map').domCanvas.parentNode.offsetHeight;
-
-				game.physicEngine.map.figureTileSize(game.canvasHolder.getCanvas('game_map'));
-				game.physicEngine.map.clear(game.canvasHolder.getCanvas('game_map'));
+				game.physicEngine.map.figureTileSize(game.canvasHolder.getCanvas('map_layer'));
 				game.physicEngine.map.regenerate(game.physicEngine.map.tileSize, game.physicEngine.map.paddingX, game.physicEngine.map.paddingY);
+				
+				game.canvasHolder.getCanvas('ressource_layer').domCanvas.setAttribute('width', game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetWidth );
+				game.canvasHolder.getCanvas('ressource_layer').domCanvas.setAttribute('height', game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetHeight );
+				game.canvasHolder.getCanvas('ressource_layer').width = game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetWidth;
+				game.canvasHolder.getCanvas('ressource_layer').height = game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetHeight;
+
+				game.canvasHolder.getCanvas('building_layer').domCanvas.setAttribute('width', game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetWidth );
+				game.canvasHolder.getCanvas('building_layer').domCanvas.setAttribute('height', game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetHeight );
+				game.canvasHolder.getCanvas('building_layer').width = game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetWidth;
+				game.canvasHolder.getCanvas('building_layer').height = game.canvasHolder.getCanvas('map_layer').domCanvas.parentNode.offsetHeight;
+
+				game.canvasHolder.getCanvas('preprocessing_layer').domCanvas.setAttribute('width', game.physicEngine.map.tileSize * game.physicEngine.map.size);
+				game.canvasHolder.getCanvas('preprocessing_layer').domCanvas.setAttribute('height', game.physicEngine.map.tileSize * game.physicEngine.map.size);
+				game.canvasHolder.getCanvas('preprocessing_layer').width = game.physicEngine.map.tileSize * game.physicEngine.map.size;
+				game.canvasHolder.getCanvas('preprocessing_layer').height = game.physicEngine.map.tileSize * game.physicEngine.map.size;
+
+				game.physicEngine.map.clear(game.canvasHolder.getCanvas('map_layer'));
+				game.graphicEngine.drawMapPreprocessing();
 			}
-			respondCanvas();
+			respondCanvas();			
 		};
 
 		EventHandler.prototype.handleMouseWheel = function(game) {
@@ -71,26 +83,34 @@ define(
 					{
 						if (delta < 0)
 						{
-							game.physicEngine.map.clear(game.canvasHolder.getCanvas('game_map'));
+							game.physicEngine.map.clear(game.canvasHolder.getCanvas('preprocessing_layer')); 
+							game.physicEngine.map.clear(game.canvasHolder.getCanvas('map_layer'));
 							game.physicEngine.map.regenerate(game.physicEngine.map.tileSize / 1.1, game.physicEngine.map.paddingX, game.physicEngine.map.paddingY);
 						}
 						else
 						{
-							game.physicEngine.map.clear(game.canvasHolder.getCanvas('game_map')); 
+							game.physicEngine.map.clear(game.canvasHolder.getCanvas('preprocessing_layer')); 
+							game.physicEngine.map.clear(game.canvasHolder.getCanvas('map_layer')); 
 							game.physicEngine.map.regenerate(game.physicEngine.map.tileSize * 1.1, game.physicEngine.map.paddingX, game.physicEngine.map.paddingY);
 						}
 					}
 
+					game.canvasHolder.getCanvas('preprocessing_layer').domCanvas.setAttribute('width', game.physicEngine.map.tileSize * game.physicEngine.map.size);
+					game.canvasHolder.getCanvas('preprocessing_layer').domCanvas.setAttribute('height', game.physicEngine.map.tileSize * game.physicEngine.map.size);
+					game.canvasHolder.getCanvas('preprocessing_layer').width = game.physicEngine.map.tileSize * game.physicEngine.map.size;
+					game.canvasHolder.getCanvas('preprocessing_layer').height = game.physicEngine.map.tileSize * game.physicEngine.map.size;
+
 					event.preventDefault();
 					event.returnValue = false;
+					game.graphicEngine.drawMapPreprocessing();
 				}, 
 				false);
 		};
 
  		EventHandler.prototype.handleKeyDown = function(game) {
 			window.addEventListener('mousedown', function(event) {
-				this.mousePosX = game.canvasHolder.getCanvas('game_map').getMousePos(event).x - game.physicEngine.map.paddingX;
-				this.mousePosY = game.canvasHolder.getCanvas('game_map').getMousePos(event).y - game.physicEngine.map.paddingY;
+				this.mousePosX = game.canvasHolder.getCanvas('map_layer').getMousePos(event).x - game.physicEngine.map.paddingX;
+				this.mousePosY = game.canvasHolder.getCanvas('map_layer').getMousePos(event).y - game.physicEngine.map.paddingY;
 				this.mouseDown = true;
 			}, false);
 		};		
@@ -106,11 +126,9 @@ define(
 			{
 				if(this.mouseDown)
 				{
-					game.physicEngine.map.clear(game.canvasHolder.getCanvas('game_map'));
-					// game.physicEngine.map.paddingX = game.canvasHolder.getCanvas('game_map').getMousePos(event).x - this.mousePosX;
-					// game.physicEngine.map.paddingY = game.canvasHolder.getCanvas('game_map').getMousePos(event).y - this.mousePosY;
-					// game.physicEngine.map.generate();
-					game.physicEngine.map.regenerate(game.physicEngine.map.tileSize, game.canvasHolder.getCanvas('game_map').getMousePos(event).x - this.mousePosX, game.canvasHolder.getCanvas('game_map').getMousePos(event).y - this.mousePosY);
+					game.physicEngine.player.buildingHolder.desactivateBuildings();
+					game.physicEngine.map.clear(game.canvasHolder.getCanvas('map_layer'));
+					game.physicEngine.map.regenerate(game.physicEngine.map.tileSize, game.canvasHolder.getCanvas('map_layer').getMousePos(event).x - this.mousePosX, game.canvasHolder.getCanvas('map_layer').getMousePos(event).y - this.mousePosY);
 					game.refresh();
 				}
 			}, false);
@@ -118,7 +136,7 @@ define(
 
 		EventHandler.prototype.handleCellClick = function(game) {
 			window.addEventListener('click', function(event) {
-				var mousePos = game.canvasHolder.getCanvas('game_map').getMousePos(event);
+				var mousePos = game.canvasHolder.getCanvas('map_layer').getMousePos(event);
 				var underlyingC = game.physicEngine.map.getUnderlying(mousePos);
 
 				if(typeof underlyingC.underlyingCell !== "undefined")
@@ -127,6 +145,7 @@ define(
 					if(underlyingC.underlyingCell.building == null)
 					{
 						game.gameEngine.addBuilding(underlyingC.underlyingCell);
+						game.graphicEngine.drawMapPreprocessing();
 					}
 				}
 
@@ -139,7 +158,7 @@ define(
 
 		EventHandler.prototype.handleBuildingClick = function(game) {
 			window.addEventListener('click', function(event) {
-				var mousePos = game.canvasHolder.getCanvas('game_map').getMousePos(event);
+				var mousePos = game.canvasHolder.getCanvas('map_layer').getMousePos(event);
 				var underlyingB = game.physicEngine.player.buildingHolder.getUnderlying(mousePos);
 
 				if(typeof underlyingB.underlyingBuilding !== "undefined")
@@ -156,7 +175,7 @@ define(
 
 		EventHandler.prototype.handleCellMouseOver = function(game) {
 			window.addEventListener('mousemove', function(event) {
-				var mousePos = game.canvasHolder.getCanvas('game_map').getMousePos(event);
+				var mousePos = game.canvasHolder.getCanvas('map_layer').getMousePos(event);
 				var underlying = game.physicEngine.map.getUnderlying(mousePos);
 
 				if(typeof underlying.underlyingCell !== "undefined")

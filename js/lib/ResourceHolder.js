@@ -17,7 +17,7 @@ define(
 					currency, 
 					src, 
 					new Rectangle(
-						game.canvasHolder.getCanvas('game_map').width/4 * (this.resources.length + 1),
+						game.canvasHolder.getCanvas('map_layer').width/4 * (this.resources.length + 1),
 						10, 
 						40, 
 						40

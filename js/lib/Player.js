@@ -16,6 +16,10 @@ define(
 		Player.prototype.draw = function(context, eventHandler)
 		{
 			this.drawUser(context, eventHandler);
+		};
+
+		Player.prototype.drawBuildingHolder = function(context, eventHandler)
+		{
 			this.buildingHolder.draw(context, eventHandler);
 		};
 

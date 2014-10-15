@@ -8,7 +8,7 @@ define(
 			this.name     = name;
 			this.cost     = cost;
 			this.currency = currency;
-			this.tile     = new Tile(src, rectangle);
+			this.tile     = new Tile(src, rectangle, false);
 			this.active   = false;
 		}
 

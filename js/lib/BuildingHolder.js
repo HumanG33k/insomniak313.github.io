@@ -18,6 +18,13 @@ define(
 			this.buildings.push(new Building(name, cost, currency, src, new Rectangle(450, 40 + 60 * this.buildings.length, 50, 50)));
 		};
 
+		BuildingHolder.prototype.desactivateBuildings = function() {
+			for (var i in this.buildings) 
+			{
+				this.buildings[i].active = false;
+			};
+		};
+		
 		BuildingHolder.prototype.draw = function(context, eventHandler)
 		{
 			for (var r in this.buildings) {
