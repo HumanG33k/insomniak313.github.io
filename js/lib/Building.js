@@ -23,6 +23,11 @@ define(
 			context.fillStyle = 'black';
 			context.clearRect(this.tile.rectangle.origin.x + this.tile.rectangle.width, this.tile.rectangle.origin.y, 200, this.tile.rectangle.height);
 			context.fillText(this.cost + ' ' + this.currency, this.tile.rectangle.origin.x + this.tile.rectangle.width + 5, this.tile.rectangle.origin.y + (this.tile.rectangle.height / 2) + 5);
+			if(this.active)
+			{
+				context.rect(this.tile.rectangle.origin.x + this.tile.rectangle.width + 5 , this.tile.rectangle.origin.y + 5, 100, this.tile.rectangle.height - 10);
+				context.stroke();
+			}
 		};
 
 		return Building;

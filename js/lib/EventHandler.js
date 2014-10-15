@@ -28,7 +28,7 @@ define(
 				game.canvasHolder.getCanvas('map_layer').stretchToParent();
 
 				game.physicEngine.map.figureTileSize(game.canvasHolder.getCanvas('map_layer'));
-				game.physicEngine.map.regenerate(game.physicEngine.map.tileSize, game.physicEngine.map.paddingX, game.physicEngine.map.paddingY);
+				game.physicEngine.map.zoom(game.physicEngine.map.tileSize, game.physicEngine.map.paddingX, game.physicEngine.map.paddingY);
 				
 				game.canvasHolder.getCanvas('ressource_layer').stretchToParent();
 				game.canvasHolder.getCanvas('building_layer').stretchToParent();
@@ -75,13 +75,13 @@ define(
 						{
 							game.physicEngine.map.clear(game.canvasHolder.getCanvas('preprocessing_layer')); 
 							game.physicEngine.map.clear(game.canvasHolder.getCanvas('map_layer'));
-							game.physicEngine.map.regenerate(game.physicEngine.map.tileSize / 1.1, game.physicEngine.map.paddingX, game.physicEngine.map.paddingY);
+							game.physicEngine.map.zoom(game.physicEngine.map.tileSize / 1.1, game.canvasHolder.getCanvas('map_layer').getMousePos(event).x, game.canvasHolder.getCanvas('map_layer').getMousePos(event).y);
 						}
 						else
 						{
 							game.physicEngine.map.clear(game.canvasHolder.getCanvas('preprocessing_layer')); 
 							game.physicEngine.map.clear(game.canvasHolder.getCanvas('map_layer')); 
-							game.physicEngine.map.regenerate(game.physicEngine.map.tileSize * 1.1, game.physicEngine.map.paddingX, game.physicEngine.map.paddingY);
+							game.physicEngine.map.zoom(game.physicEngine.map.tileSize * 1.1, game.physicEngine.map.paddingX, game.physicEngine.map.paddingY);
 						}
 					}
 
@@ -118,7 +118,7 @@ define(
 				{
 					game.gameEngine.buildingHolder.desactivateBuildings();
 					game.physicEngine.map.clear(game.canvasHolder.getCanvas('map_layer'));
-					game.physicEngine.map.regenerate(game.physicEngine.map.tileSize, game.canvasHolder.getCanvas('map_layer').getMousePos(event).x - this.mousePosX, game.canvasHolder.getCanvas('map_layer').getMousePos(event).y - this.mousePosY);
+					game.physicEngine.map.slide(game.canvasHolder.getCanvas('map_layer').getMousePos(event).x - this.mousePosX, game.canvasHolder.getCanvas('map_layer').getMousePos(event).y - this.mousePosY);
 					game.refresh();
 				}
 			}, false);

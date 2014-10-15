@@ -8,14 +8,14 @@ define(
 			this.buildings = [];
 		}
 
-		BuildingHolder.prototype.init = function(texture1, texture2) {
-			this.addBuilding('Batiment', 10, '$', texture1);
-			this.addBuilding('Batiment', 20, '$', texture2);
+		BuildingHolder.prototype.init = function(game, texture1, texture2) {
+			this.addBuilding(game, 'Batiment', 10, '$', texture1);
+			this.addBuilding(game, 'Batiment', 20, '$', texture2);
 		};
 
-		BuildingHolder.prototype.addBuilding = function(name, cost, currency, src)
+		BuildingHolder.prototype.addBuilding = function(game, name, cost, currency, src)
 		{
-			this.buildings.push(new Building(name, cost, currency, src, new Rectangle(450, 40 + 60 * this.buildings.length, 50, 50)));
+			this.buildings.push(new Building(name, cost, currency, src, new Rectangle(game.canvasHolder.getCanvas('ressource_layer').width - 200, 40 + 60 * this.buildings.length, 50, 50)));
 		};
 
 		BuildingHolder.prototype.desactivateBuildings = function() {

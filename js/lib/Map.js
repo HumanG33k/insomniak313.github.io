@@ -5,7 +5,7 @@ define(
 
 		function Map()
 		{
-			this.size = 100;
+			this.size = 30;
 			this.cells = [];
 			this.tileSize = 20;
 			this.paddingX = 100;
@@ -23,13 +23,18 @@ define(
 			}
 		};
 
-		Map.prototype.regenerate = function(tileSize, paddingX, paddingY) {
+		Map.prototype.slide = function(paddingX, paddingY) {
+			this.paddingX = paddingX;
+			this.paddingY = paddingY;
+		};
+
+		Map.prototype.zoom = function(tileSize, paddingX, paddingY) {
 			for (var i in this.cells) 
 			{
 				// this.cells[i].tile.rectangle.origin.x -= this.paddingX;
 				this.cells[i].tile.rectangle.origin.x /= this.tileSize;
 				this.cells[i].tile.rectangle.origin.x *= tileSize;
-				// this.cells[i].tile.rectangle.origin.x += paddingX;
+				// this.cells[i].tile.rectangle.origin.x += this.paddingX ;
 
 				// this.cells[i].tile.rectangle.origin.y -= this.paddingY;
 				this.cells[i].tile.rectangle.origin.y /= this.tileSize;
@@ -47,8 +52,8 @@ define(
 			};
 
 			this.tileSize = tileSize;
-			this.paddingX = paddingX;
-			this.paddingY = paddingY;
+			// this.paddingX = paddingX;
+			// this.paddingY = paddingY;
 		};
 		
 		Map.prototype.generate = function(texture)

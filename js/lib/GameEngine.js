@@ -19,7 +19,7 @@ define(
 		GameEngine.prototype.addBuildingHolder = function()
 		{
 			this.buildingHolder = new BuildingHolder();
-			this.buildingHolder.init(this.game.graphicEngine.textureHolder.getTexture('building'), this.game.graphicEngine.textureHolder.getTexture('building_2'));
+			this.buildingHolder.init(this.game, this.game.graphicEngine.textureHolder.getTexture('building'), this.game.graphicEngine.textureHolder.getTexture('building_2'));
 		};
 
 		// Attention c'est pas la meme chose
@@ -38,7 +38,7 @@ define(
 							this.buildingHolder.buildings[i].name,
 					 		this.buildingHolder.buildings[i].cost, 
 							this.buildingHolder.buildings[i].currency,
-							this.buildingHolder.buildings[i].tile.texture.image.src,
+							this.buildingHolder.buildings[i].tile.texture,
 				  			new Rectangle(
 				  				this.buildingHolder.buildings[i].tile.rectangle.x,
 								this.buildingHolder.buildings[i].tile.rectangle.y, 
