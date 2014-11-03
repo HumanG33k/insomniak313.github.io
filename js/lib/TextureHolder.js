@@ -9,6 +9,7 @@ define(
 		}
 
 		TextureHolder.prototype.init = function() {
+			this.textures.push(new Texture('ground', 'img/ground.png'));
 			this.textures.push(new Texture('grass', 'img/image_grass_iso.png'));
 			this.textures.push(new Texture('building', 'img/building.png'))
 			this.textures.push(new Texture('building_2', 'img/building_2.png'))

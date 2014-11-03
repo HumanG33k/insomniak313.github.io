@@ -33,10 +33,12 @@ define(
 				game.canvasHolder.getCanvas('ressource_layer').stretchToParent();
 				game.canvasHolder.getCanvas('building_layer').stretchToParent();
 
-				game.canvasHolder.getCanvas('preprocessing_layer').domCanvas.setAttribute('width', game.physicEngine.map.tileSize * game.physicEngine.map.size);
-				game.canvasHolder.getCanvas('preprocessing_layer').domCanvas.setAttribute('height', game.physicEngine.map.tileSize * game.physicEngine.map.size);
-				game.canvasHolder.getCanvas('preprocessing_layer').width = game.physicEngine.map.tileSize * game.physicEngine.map.size;
-				game.canvasHolder.getCanvas('preprocessing_layer').height = game.physicEngine.map.tileSize * game.physicEngine.map.size;
+				game.canvasHolder.getCanvas('preprocessing_layer').stretchToParent();
+				
+				// game.canvasHolder.getCanvas('preprocessing_layer').domCanvas.setAttribute('width', game.physicEngine.map.tileSize * game.physicEngine.map.size);
+				// game.canvasHolder.getCanvas('preprocessing_layer').domCanvas.setAttribute('height', game.physicEngine.map.tileSize * game.physicEngine.map.size);
+				// game.canvasHolder.getCanvas('preprocessing_layer').width = game.physicEngine.map.tileSize * game.physicEngine.map.size;
+				// game.canvasHolder.getCanvas('preprocessing_layer').height = game.physicEngine.map.tileSize * game.physicEngine.map.size;
 
 				game.physicEngine.map.clear(game.canvasHolder.getCanvas('map_layer'));
 				game.graphicEngine.drawMapPreprocessing();

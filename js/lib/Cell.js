@@ -17,19 +17,7 @@ define(
 
 		Cell.prototype.draw = function(context)
 		{
-			// if(this.active)
-			// {
-			// 	this.tile.image.src = 'img/image_grass_iso_active.png';
-			// }
-			// else if(this.hover)
-			// {
-			// 	this.tile.image.src = 'img/image_grass_iso_hover.png';
-			// }
-			// else
-			// {
-			// 	this.tile.image.src = 'img/image_grass_iso.png';
-			// }
-			this.tile.draw(context);
+			this.tile.drawStroke(context);
 		};
 
 		Cell.prototype.drawBuilding = function(context)

@@ -3,13 +3,16 @@ define(
 	function(Cell, Rectangle) {
 		"use strict";
 
-		function Map()
+		function Map(texture)
 		{
-			this.size = 30;
+			this.size = 10;
 			this.cells = [];
-			this.tileSize = 20;
-			this.paddingX = 100;
-			this.paddingY = 100;
+			this.tileSize = 85;
+			this.paddingX = 0;
+			this.paddingY = 0;
+			this.width = 0;
+			this.height = 0;
+			this.texture = texture;
 		}
 
 		Map.prototype.figureTileSize = function(canvas) {
@@ -21,6 +24,8 @@ define(
 			{
 				this.tileSize = ((canvas.height - 2 * this.paddingX) / this.size);
 			}
+			this.width = canvas.width;
+			this.height = canvas.height;
 		};
 
 		Map.prototype.slide = function(paddingX, paddingY) {
@@ -52,6 +57,8 @@ define(
 			};
 
 			this.tileSize = tileSize;
+			// this.width = this.tileSize * this.size/2;
+			// this.height = this.tileSize * this.size/2;
 			// this.paddingX = paddingX;
 			// this.paddingY = paddingY;
 		};
@@ -60,7 +67,7 @@ define(
 		{
 			this.cells = [];
 			var tmp = true;
-			var pasY = 0.58;
+			var pasY = 1;
 
 			for (var y = 0; y < this.size/2; y += 1/2)
 			{
@@ -71,8 +78,8 @@ define(
 								new Cell(
 									texture,
 									new Rectangle(
-										(this.size/2 + x) * this.tileSize, 
-										(this.size/2 + y) * pasY * this.tileSize, 
+										 (this.size/2 + x) * this.tileSize, 
+										 y * pasY * this.tileSize, 
 										this.tileSize, 
 										this.tileSize
 									)
@@ -90,8 +97,8 @@ define(
 								new Cell(
 									texture,
 									new Rectangle(
-										(this.size/2 + x) * this.tileSize, 
-										(this.size/2 + y) * pasY * this.tileSize, 
+										 (this.size/2 + x) * this.tileSize, 
+										 y * pasY * this.tileSize, 
 										this.tileSize, 
 										this.tileSize
 									)
@@ -127,6 +134,15 @@ define(
 
 		Map.prototype.draw = function(context)
 		{
+			if(this.width > this.height)
+			{
+				context.drawImage(this.texture.image, 0, 0, this.width, this.texture.image.height * this.width / this.texture.image.width);
+			}
+			else
+			{
+				context.drawImage(this.texture.image, 0, 0, this.texture.image.width * this.height / this.texture.image.height, this.height );
+			}
+		
 			for (var i in this.cells) 
 			{
 				this.cells[i].draw(context);

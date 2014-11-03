@@ -40,6 +40,7 @@ define(
 			this.launchEventListeners();
 			this.gameEngine.addRessourceHolder();
 			this.gameEngine.addBuildingHolder();
+			this.graphicEngine.drawMapPreprocessing();
 			
 			var t = this;
 			// 1000 / 60
